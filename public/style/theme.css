@@ -1,0 +1,448 @@
+/* public-sans-300 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/public-sans-v15-latin-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* public-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/public-sans-v15-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* public-sans-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/public-sans-v15-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* public-sans-600 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/public-sans-v15-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* public-sans-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/public-sans-v15-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* public-sans-800 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 800;
+  src: url("../fonts/public-sans-v15-latin-800.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+header {
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+  padding: 10px 16px;
+  margin: 8px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav .logo img {
+  height: 30px;
+}
+@media screen and (max-width: 992px) {
+  nav .logo img {
+    height: 20px;
+  }
+}
+nav .burger {
+  display: none;
+}
+@media screen and (max-width: 992px) {
+  nav .burger {
+    display: block;
+  }
+  nav .burger .line {
+    width: 25px;
+    height: 3px;
+    background-color: #3a3745;
+    margin-bottom: 6px;
+  }
+  nav .burger .line:nth-last-child(1) {
+    margin-bottom: 0;
+  }
+}
+nav .menu .close-menu {
+  display: none;
+}
+nav .menu ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  gap: 1rem;
+}
+nav .menu ul li {
+  padding: 0.5rem;
+}
+nav .menu ul li a {
+  color: #3a3745;
+  text-decoration: none;
+  transition: 0.3s;
+}
+nav .menu ul li a:hover {
+  color: #7367f0;
+}
+nav .menu ul li a.active {
+  color: #7367f0;
+}
+@media screen and (max-width: 992px) {
+  nav .menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: all 0.2s ease;
+    transition: 0.3s;
+  }
+  nav .menu ul {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+  nav .menu .close-menu {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 2.5rem;
+    font-weight: 200;
+    transform: rotate(45deg);
+    cursor: pointer;
+  }
+}
+nav .menu.show {
+  transform: translateX(0);
+}
+nav .right-menu {
+  position: relative;
+}
+nav .right-menu .head {
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  border: solid 2px #b0b0b0;
+  cursor: pointer;
+}
+nav .right-menu .head img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 40px;
+}
+nav .right-menu .drop-down {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  min-width: 200px;
+  max-width: 250px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 16px 10px 10px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  color: #5d596c;
+  text-align: center;
+  transition: all 0.2s linear;
+}
+nav .right-menu .drop-down .name {
+  font-weight: 500;
+  max-width: 200px;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+nav .right-menu .drop-down .role {
+  font-size: 0.875rem;
+}
+nav .right-menu .drop-down .divi {
+  height: 1px;
+  background-color: #cccccc;
+  margin: 1rem 0 8px;
+}
+nav .right-menu .drop-down a {
+  display: block;
+  padding: 10px 0;
+  color: #5d596c;
+  text-decoration: none;
+  transition: 0.3s;
+}
+nav .right-menu .drop-down a:hover {
+  color: #7367f0;
+}
+nav .right-menu .drop-down.active {
+  opacity: 1;
+  pointer-events: all;
+  top: 40px;
+}
+
+* {
+  font-family: "Public Sans";
+}
+
+body {
+  background-color: #f8f7fa;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 10% auto 0;
+}
+
+.form-control,
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 0.422rem 0.875rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #6f6b7d;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid #dbdade;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+  color: #6f6b7d;
+  background-color: #fff;
+  border-color: #7367f0 !important;
+  outline: 0;
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+}
+
+input:focus::-moz-placeholder {
+  -moz-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+  padding-left: 0.35rem;
+  color: #a5a3ae !important;
+}
+
+input:focus::placeholder {
+  transition: all 0.2s ease;
+  padding-left: 0.35rem;
+  color: #a5a3ae !important;
+}
+input::-moz-placeholder {
+  color: #a5a3ae !important;
+}
+input::placeholder {
+  color: #a5a3ae !important;
+}
+
+.form-label {
+  color: #5d596c;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #7367f0;
+  border-color: #7367f0;
+}
+.btn-primary:hover {
+  background-color: #605bd4;
+  border-color: #605bd4;
+}
+
+a {
+  text-decoration: none;
+  color: #7367f0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: #3a3745;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-bottom: 0.25rem;
+}
+
+.sub {
+  color: #5d596c;
+}
+
+.space_object {
+  margin: 8px;
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+  background-color: #fff;
+}
+
+.title {
+  font-size: 1.125rem;
+  color: #5d596c;
+  font-weight: 600;
+}
+
+.status {
+  width: 100px;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.status.active {
+  background-color: #dff7e9;
+  color: #28c76f;
+}
+
+.status.inactive {
+  background-color: #fce5e6;
+  color: #ea5455;
+}
+
+.form-alert {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.form-alert.error {
+  background-color: #fce5e6;
+  color: #ea5455;
+}
+
+.form-alert.success {
+  background-color: #dff7e9;
+  color: #28c76f;
+}
+
+.custom-toast {
+  background-color: #fff;
+  color: #3a3745;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  padding: 0.25rem 0.5rem;
+  border: solid 1px #3a3745;
+  border-radius: 0.25rem;
+  z-index: 999999;
+}
+
+.custom-toast.success {
+  background-color: #dff7e9;
+  color: #28c76f;
+  border-color: #28c76f;
+}
+
+.custom-toast.error {
+  background-color: #fce5e6;
+  color: #ea5455;
+  border-color: #ea5455;
+}
+
+.form-check-input {
+  border-color: #b6b6b6 !important;
+}
+
+.text-success {
+  color: #28c76f !important;
+}
+
+.file-label {
+  color: #fff;
+  background-color: #a5a3ae !important;
+  padding: 0.7rem 1rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.file-label:hover {
+  background-color: #3a3745 !important;
+}
+
+.img-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.img-preview .preview-item {
+  width: calc(50% - 8px);
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: relative;
+}
+@media screen and (max-width: 576px) {
+  .img-preview .preview-item {
+    width: 100%;
+  }
+}
+.img-preview .preview-item img {
+  width: 100%;
+}
+.img-preview .preview-item .remove-img {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgb(248, 22, 22);
+  color: #fff;
+  border-radius: 50%;
+  padding: 0.25rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.81rem;
+  cursor: pointer;
+}
+
+.mx150 {
+  max-width: 150px !important;
+}

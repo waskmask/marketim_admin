@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/public/images/MFav.png" type="image/png" />
+    <title><%=title%></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/style/theme.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <!-- main -->
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-6 p-0">
+            <div class="card border-0 space_object">
+              <div class="card-header bg-white py-3">
+                <div class="title">Add categories</div>
+              </div>
+              <div class="card-body">
+                <form action="/product-categories" method="POST">
+                  <div class="mb-3">
+                    <label for="categoryName" class="form-label">
+                      Category Name
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="categoryName"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="status" class="form-label"> Status </label>
+                    <select class="form-select" id="status">
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                  <div class="form-alert success d-none" id="successAlert">
+                    Category added successfully!
+                  </div>
+                  <div class="form-alert d-none error" id="errorAlert">
+                    Error adding category
+                  </div>
+                  <button
+                    type="button"
+                    id="addCategoryBtn"
+                    class="btn btn-primary mt-2 mb-2"
+                  >
+                    Add category
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 p-0 mb-4">
+            <div class="card border-0 space_object">
+              <div class="card-header bg-white py-3">
+                <div class="title">Category list</div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="categoriesTable">
+                      <% categories.forEach(function(category) { %>
+                      <tr>
+                        <td>
+                          <input
+                            type="text"
+                            required
+                            class="category-input form-control text-capitalize"
+                            id="categoryName<%- category._id %>"
+                            value="<%- category.categoryName %>"
+                            data-id="<%- category._id %>"
+                          />
+                        </td>
+                        <td>
+                          <span
+                            class="status <%- category.status %> text-capitalize"
+                            ><%- category.status %></span
+                          >
+                        </td>
+                        <td>
+                          <div class="form-check form-switch">
+                            <input class="form-check-input status-switch"
+                            type="checkbox" role="switch" id="<%- category._id
+                            %>" <% if(category.status === 'active') { %> checked
+                            <% } %> />
+                          </div>
+                        </td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- main end -->
+    <div class="custom-toast d-none"></div>
+    <!-- js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/public/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/public/js/theme.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(
+                  cookie.substring(name.length + 1)
+                );
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+        // Retrieve the loginToken from cookies
+        const loginToken = getCookie("loginToken");
+
+        // Prepare the Axios request configuration, including the Authorization header
+        const config = {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+
+        const categorySubmit = document.getElementById("addCategoryBtn");
+
+        categorySubmit.addEventListener("click", function () {
+          categorySubmit.textContent = "Adding..";
+
+          const categoryName = document
+            .getElementById("categoryName")
+            .value.trim();
+          const status = document.getElementById("status").value;
+
+          axios
+            .post(`${API_URL}/add-category`, { categoryName, status }, config)
+            .then(function (response) {
+              // Handle success
+              document
+                .getElementById("successAlert")
+                .classList.remove("d-none");
+              document.getElementById("errorAlert").classList.add("d-none");
+              console.log("Category added successfully:", response.data);
+
+              document.getElementById("categoryName").value = "";
+              categorySubmit.textContent = "Add category";
+              const categoriesTable =
+                document.getElementById("categoriesTable");
+
+              // Use values from the form inputs directly, assuming they represent the latest added category
+              // You may need a method to generate or retrieve a unique ID if your table structure requires it
+              const newRow = `
+        <tr>
+            <td>
+                <input type="text" readonly required class="category-input form-control" 
+                id="categoryName${Date.now()}" value="${categoryName}" 
+                data-id="${Date.now()}"> <!-- Assuming Date.now() as a placeholder -->
+            </td>
+            <td>
+                <span class="status ${status} text-capitalize">${status}</span>
+            </td>
+            <td>
+                <a href=''><i class="fa-solid fa-rotate-right"></i></a>
+            </td>
+        </tr>
+    `;
+
+              // Prepend the new row
+              categoriesTable.insertAdjacentHTML("afterbegin", newRow);
+              setTimeout(() => {
+                document.getElementById("successAlert").classList.add("d-none");
+              }, 2000);
+            })
+            .catch(function (error) {
+              // Handle error
+              document.getElementById("errorAlert").classList.remove("d-none");
+              document.getElementById("successAlert").classList.add("d-none");
+              document.getElementById("errorAlert").innerText =
+                error.response.data.message;
+              categorySubmit.textContent = "Add category";
+              console.error(error);
+            });
+        });
+
+        // Event listener for category name changes
+        document.querySelectorAll(".category-input").forEach((input) => {
+          input.addEventListener("blur", function () {
+            const id = this.getAttribute("data-id");
+            const categoryName = this.value.trim();
+
+            if (!categoryName) {
+              showToast("Category name cannot be empty", "Error");
+              return;
+            }
+
+            axios
+              .patch(`${API_URL}/update-category`, { id, categoryName }, config)
+              .then((response) => {
+                showToast("Category updated successfully", "Success");
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                showToast("Error updating category", "Error");
+              });
+          });
+        });
+
+        // Event listener for status changes
+        document
+          .querySelectorAll(".form-check-input.status-switch")
+          .forEach((switchEl) => {
+            switchEl.addEventListener("change", function () {
+              const id = this.id;
+              const status = this.checked ? "active" : "inactive";
+
+              axios
+                .patch(`${API_URL}/update-category`, { id, status }, config)
+                .then((response) => {
+                  const statusSpan =
+                    this.closest("tr").querySelector(".status");
+
+                  // Update the <span> element's class and text
+                  statusSpan.className = `status ${status} text-capitalize`;
+                  statusSpan.textContent = status;
+                  showToast("Category status updated successfully", "Success");
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                  showToast("Error updating category status", "Error");
+                });
+            });
+          });
+      });
+
+      function showToast(message, type) {
+        const toastEl = document.querySelector(".custom-toast");
+
+        // Clear previous classes
+        toastEl.classList.remove("d-none", "success", "error");
+
+        // Add the relevant class based on the type of message
+        if (type === "Success") {
+          toastEl.classList.add("success");
+        } else if (type === "Error") {
+          toastEl.classList.add("error");
+        }
+
+        // Set the message
+        toastEl.textContent = message;
+
+        // Show the toast by removing 'd-none'
+        toastEl.classList.remove("d-none");
+
+        // Hide the toast after 4 seconds
+        setTimeout(() => {
+          toastEl.classList.add("d-none");
+        }, 3000);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutButton = document.querySelector("#logoutButton");
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            axios
+              .post(`${API_URL}/logout`, {}, { withCredentials: true })
+              .then((response) => {
+                console.log("Logged out successfully");
+                localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
+                window.location.href = "/";
+              })
+              .catch((error) => {
+                console.error("Error logging out:", error);
+              });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

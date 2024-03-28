@@ -1,0 +1,166 @@
+@import "./var";
+
+header {
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+  padding: 10px 16px;
+  margin: 8px;
+  border-radius: 5px;
+  background-color: $white;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .logo {
+    img {
+      height: 30px;
+
+      @include medium {
+        height: 20px;
+      }
+    }
+  }
+
+  .burger {
+    display: none;
+    @include medium {
+      display: block;
+      .line {
+        width: 25px;
+        height: 3px;
+        background-color: $dark;
+        margin-bottom: 6px;
+        &:nth-last-child(1) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .menu {
+    .close-menu {
+      display: none;
+    }
+    ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
+      gap: 1rem;
+
+      li {
+        padding: 0.5rem;
+        a {
+          color: $dark;
+          text-decoration: none;
+          transition: 0.3s;
+          &:hover {
+            color: $primary;
+          }
+        }
+        a.active {
+          color: $primary;
+        }
+      }
+    }
+
+    @include medium {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: all 0.2s ease;
+      transition: 0.3s;
+      ul {
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+      }
+      .close-menu {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 20px;
+        font-size: 2.5rem;
+        font-weight: 200;
+        transform: rotate(45deg);
+        cursor: pointer;
+      }
+    }
+  }
+  .menu.show {
+    transform: translateX(0);
+  }
+
+  .right-menu {
+    position: relative;
+    .head {
+      height: 40px;
+      width: 40px;
+      border-radius: 40px;
+      border: solid 2px #b0b0b0;
+      cursor: pointer;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 40px;
+      }
+    }
+
+    .drop-down {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      min-width: 200px;
+      max-width: 250px;
+      background-color: $white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 16px 10px 10px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      color: $med;
+      text-align: center;
+      transition: all 0.2s linear;
+      .name {
+        font-weight: 500;
+        max-width: 200px;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+      }
+      .role {
+        font-size: 0.875rem;
+      }
+      .divi {
+        height: 1px;
+        background-color: lighten($color: #000000, $amount: 80);
+        margin: 1rem 0 8px;
+      }
+      a {
+        display: block;
+        padding: 10px 0;
+        color: $med;
+        text-decoration: none;
+        transition: 0.3s;
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+    .drop-down.active {
+      opacity: 1;
+      pointer-events: all;
+      top: 40px;
+    }
+  }
+}

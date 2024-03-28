@@ -1,0 +1,54 @@
+<header>
+  <nav>
+    <div class="logo">
+      <img src="/public/images/marketim.svg" alt="Logo" />
+    </div>
+
+    <div class="burger">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div class="menu">
+      <div class="close-menu">+</div>
+      <ul>
+        <li>
+          <a
+            class="<%= path === '/dashboard' ? 'active' : '' %>"
+            href="<%= path === '/dashboard' ? 'javascript:void(0)' : '/dashboard' %>"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            class="<%= path === '/products' ? 'active' : '' %>"
+            href="<%= path === '/products' ? 'javascript:void(0)' : '/products' %>"
+            >Products</a
+          >
+        </li>
+        <li>
+          <a
+            class="<%= path === '/master' ? 'active' : '' %>"
+            href="<%= path === '/master' ? 'javascript:void(0)' : '/product-categories' %>"
+            >Master data</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="right-menu">
+      <div class="head" id="userDDToggle">
+        <img src="/public/images/default-avatar.png" alt="avatar" />
+      </div>
+      <div class="drop-down" id="userDD">
+        <div class="name text-capitalize"><%-user.fullName%></div>
+        <div class="role text-capitalize"><%-user.role%></div>
+        <div class="divi"></div>
+        <div class="logout">
+          <a href="javascript:void(0)" id="logoutButton"
+            ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+          >
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/public/images/MFav.png" type="image/png" />
+    <title><%=title%></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/style/theme.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <!-- main -->
+    <main>
+      <div class="container-fluid mb-5">
+        <form action="javascript:void(0)" id="addProductForm">
+          <div class="row my-4" style="gap: 1rem">
+            <div class="col-lg-5 offset-lg-1 p-0">
+              <div class="card border-0 space_object">
+                <div class="card-header bg-white py-3">
+                  <div class="title">Add new product</div>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="title-tr" class="form-label">
+                      Ürün başlığı (tr)
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control title-input"
+                      id="title-tr"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="title-de" class="form-label">
+                      Produkt titel (de)
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control title-input"
+                      id="title-de"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="categories" class="form-label">
+                      Categories
+                    </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <% categories.forEach(function(category) { %>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="<%= category._id %>"
+                          id="<%= category._id %>"
+                          name="categories"
+                          required
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="<%= category._id %>"
+                        >
+                          <%= category.categoryName %>
+                        </label>
+                      </div>
+
+                      <% }); %>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="bio" class="form-label"> Bio </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="true"
+                          id="bio-yes"
+                          name="bio"
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="bio-yes"
+                        >
+                          Yes
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="false"
+                          id="bio-no"
+                          name="bio"
+                          checked
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="bio-no"
+                        >
+                          No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="Halal" class="form-label text-success">
+                      Halal
+                    </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="true"
+                          id="halal-yes"
+                          name="halal"
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="halal-yes"
+                        >
+                          Yes
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="false"
+                          id="halal-no"
+                          name="halal"
+                          checked
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="halal-no"
+                        >
+                          No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="mb-3 col-md-6">
+                      <label for="handelClass" class="form-label">
+                        Handel Klass
+                      </label>
+                      <select id="handelClass" class="form-select">
+                        <option value="">Select</option>
+                        <option value="Class A">Class A</option>
+                        <option value="Class B">Class B</option>
+                        <option value="Class C">Class C</option>
+                      </select>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                      <label for="base_price" class="form-label">
+                        Base price
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="base_price"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="unit_type" class="form-label">
+                        Weight (unit type)
+                      </label>
+                      <select name="" id="unit_type" class="form-select">
+                        <option value="">Select</option>
+                        <option value="kg">kg</option>
+                        <option value="ltr">Ltr</option>
+                        <option value="grm">grams</option>
+                        <option value="ounce">Ounce</option>
+                      </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label for="unit_vol" class="form-label">
+                        Weight (unit vol)
+                      </label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="unit_vol"
+                        placeholder="e.g., 2kg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 p-0">
+              <div class="card border-0 space_object">
+                <div class="card-header bg-white py-3">
+                  <div class="title">
+                    <i class="fa-regular fa-image"></i> Add product media
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label
+                      for="images"
+                      class="form-label file-label"
+                      id="toggleFileInput"
+                    >
+                      <i class="fa-solid fa-plus"></i> Add images
+                    </label>
+                    <input
+                      type="file"
+                      class="d-none"
+                      name="images"
+                      id="images"
+                      multiple
+                      accept="image/*"
+                      required
+                    />
+
+                    <div class="img-preview mt-3" id="preview"></div>
+                  </div>
+
+                  <div class="form-alert success d-none" id="successAlert">
+                    Category added successfully!
+                  </div>
+                  <div class="form-alert d-none error" id="errorAlert">
+                    Error adding category
+                  </div>
+                  <button
+                    type="button"
+                    id="addProductBtn"
+                    class="btn btn-primary mt-2 mb-2"
+                  >
+                    Add product
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+    <!-- main end -->
+    <div class="custom-toast d-none"></div>
+    <!-- js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/public/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/public/js/theme.js"></script>
+
+    <script>
+      let accumulatedFiles = []; // Global array to hold files
+
+      document
+        .getElementById("images")
+        .addEventListener("change", function (e) {
+          setLoading(true); // Set loading state
+
+          // Temporarily store new files to avoid duplicates
+          let newFiles = Array.from(e.target.files).filter(
+            (file) => !accumulatedFiles.find((f) => f.name === file.name)
+          );
+
+          let filesLoaded = 0; // Counter to track loaded files for this change event
+
+          newFiles.forEach((file) => {
+            accumulatedFiles.push(file); // Add new file to the accumulatedFiles array
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              if (++filesLoaded === newFiles.length) {
+                setLoading(false); // Reset loading state after all files are loaded
+                updatePreviews(); // Update previews after loading is complete
+              }
+            };
+            reader.readAsDataURL(file);
+          });
+
+          if (newFiles.length === 0) {
+            // In case there are no new files
+            setLoading(false);
+          }
+        });
+
+      function updatePreviews() {
+        const previewContainer = document.getElementById("preview");
+        previewContainer.innerHTML = ""; // Clear existing previews
+
+        accumulatedFiles.forEach((file, index) => {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const previewItem = document.createElement("div");
+            previewItem.classList.add("preview-item");
+
+            previewItem.innerHTML = `
+        <img src="${e.target.result}" alt="preview"/>
+        <div class="remove-img" data-index="${index}"><i class="fa-solid fa-trash"></i></div>
+      `;
+
+            previewContainer.appendChild(previewItem);
+
+            previewItem
+              .querySelector(".remove-img")
+              .addEventListener("click", function () {
+                setLoading(true); // Set loading state
+                const removeIndex = parseInt(
+                  this.getAttribute("data-index"),
+                  10
+                );
+                accumulatedFiles.splice(removeIndex, 1);
+                updatePreviews(); // Update the preview area after removing an item
+                document.getElementById("images").value = ""; // Reset file input to ensure you can reselect the same file if needed
+                setLoading(false); // Reset loading state
+              });
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function setLoading(loading) {
+        const label = document.getElementById("toggleFileInput");
+        if (loading) {
+          label.textContent = "Loading..."; // Set label to Loading... during operation
+        } else {
+          label.innerHTML = '<i class="fa-solid fa-plus"></i> Add images'; // Reset label after operation
+        }
+      }
+    </script>
+
+    <script>
+      const addProductBtn = document.getElementById("addProductBtn");
+      addProductBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        document.querySelectorAll('input[type="text"]').forEach((input) => {
+          input.value = input.value.trim();
+        });
+
+        let oneTitleFilled = false;
+        document.querySelectorAll(".title-input").forEach((input) => {
+          if (input.value) oneTitleFilled = true;
+        });
+
+        if (!oneTitleFilled) {
+          swal("Error", "Please fill in at least one title.", "error");
+          return;
+        }
+
+        const formData = new FormData();
+
+        // Collecting text inputs
+        formData.append("title[tr]", document.getElementById("title-tr").value);
+        formData.append("title[de]", document.getElementById("title-de").value);
+        const categoriesChecked = document.querySelectorAll(
+          'input[name="categories"]:checked'
+        ).length;
+        const validations = [
+          {
+            condition:
+              document.querySelectorAll('input[name="categories"]:checked')
+                .length > 0,
+            message: "Please select at least one category.",
+          },
+          {
+            condition:
+              document.getElementById("handelClass").value.trim() !== "",
+            message: "Please select a handle class.",
+          },
+          {
+            condition:
+              document.getElementById("base_price").value.trim() !== "",
+            message: "Please add a base price.",
+          },
+          {
+            condition:
+              document.getElementById("unit_type").value.trim() !== "" &&
+              document.getElementById("unit_vol").value.trim() !== "",
+            message: "Unit type and unit volume are required.",
+          },
+          {
+            condition: document.getElementById("images").files.length > 0,
+            message: "Please upload at least one image.",
+          },
+        ];
+
+        for (let validation of validations) {
+          if (!validation.condition) {
+            swal("Error", validation.message, "error");
+            return; // Stop at the first failed validation
+          }
+        }
+        // Collecting categories
+        document
+          .querySelectorAll('input[name="categories"]:checked')
+          .forEach((checkbox) => {
+            formData.append("categories", checkbox.value);
+          });
+
+        // Collecting single choice inputs (e.g., radio buttons for 'bio' and 'halal')
+        formData.append(
+          "organic",
+          document.querySelector('input[name="bio"]:checked').value
+        );
+        formData.append(
+          "isHalal",
+          document.querySelector('input[name="halal"]:checked').value
+        );
+
+        // Collecting dropdown selections
+        formData.append(
+          "handelClass",
+          document.getElementById("handelClass").value
+        );
+        formData.append(
+          "weight[unit_type]",
+          document.getElementById("unit_type").value
+        );
+        formData.append(
+          "weight[unit_vol]",
+          document.getElementById("unit_vol").value
+        );
+
+        // Collecting files
+        const files = document.getElementById("images").files;
+        for (let i = 0; i < files.length; i++) {
+          formData.append("images", files[i]);
+        }
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + "=") {
+                cookieValue = decodeURIComponent(
+                  cookie.substring(name.length + 1)
+                );
+                break;
+              }
+            }
+          }
+          return cookieValue;
+        }
+
+        // Retrieve the loginToken from cookies
+        const loginToken = getCookie("loginToken");
+        addProductBtn.textContent = "Loading...";
+
+        fetch(`${API_URL}/add-product`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            swal("Success", "Product successfully added!", "success").then(
+              () => {
+                document.getElementById("addProductForm").reset();
+                accumulatedFiles = []; // Clear accumulated files array
+                updatePreviews(); // Update the previews to clear them
+                addProductBtn.textContent = "Add product";
+              }
+            );
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            swal("Error", "There was a problem adding the product.", "error");
+          });
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutButton = document.querySelector("#logoutButton");
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            axios
+              .post(`${API_URL}/logout`, {}, { withCredentials: true })
+              .then((response) => {
+                console.log("Logged out successfully");
+                localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
+                window.location.href = "/";
+              })
+              .catch((error) => {
+                console.error("Error logging out:", error);
+              });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

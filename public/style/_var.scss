@@ -1,0 +1,20 @@
+$primary: #7367f0;
+$dark: #3a3745;
+$med: #5d596c;
+$light: #a5a3ae !important;
+$white: #fff;
+@mixin medium {
+  @media screen and (max-width: 992px) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+@mixin phone {
+  @media screen and (max-width: 576px) {
+    @content;
+  }
+}
