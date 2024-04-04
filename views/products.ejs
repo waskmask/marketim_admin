@@ -40,7 +40,7 @@
         <div class="row">
           <div class="col p-0 mb-4">
             <button id="toAddProduct" class="btn-primary btn m-3">
-              <i class="fa-solid fa-plus"></i> Add new product
+              <i class="fa-solid fa-plus"></i> Neues Produkt hinzufügen
             </button>
             <div class="card border-0 space_object">
               <div class="card-header bg-white py-3">
@@ -52,15 +52,27 @@
                   <table class="table" id="productTable">
                     <thead>
                       <tr>
+                        <th>Img</th>
                         <th>Title</th>
                         <th>Categories</th>
                         <th class="mx150">Status</th>
-                        <th class="mx150">Action</th>
+                        <!-- <th class="mx150">Action</th> -->
                       </tr>
                     </thead>
                     <tbody id="categoriesTable">
                       <% products.forEach(function(product) { %>
                       <tr>
+                        <td>
+                          <img
+                            src="https://hl-fc.de/uploads/<%-product.thumbnail%>"
+                            alt=""
+                            style="
+                              width: 60px;
+                              height: 60px;
+                              object-fit: contain;
+                            "
+                          />
+                        </td>
                         <td class="text-capitalize">
                           <% if (product.title && product.title.tr) { %> <%-
                           product.title.tr %><br />
@@ -81,11 +93,11 @@
                             <%- product.status %>
                           </span>
                         </td>
-                        <td class="mx150">
+                        <!-- <td class="mx150">
                           <a href="/<%- product._id %>">
                             <i class="fa-regular fa-eye"></i>
                           </a>
-                        </td>
+                        </td> -->
                       </tr>
                       <% }); %>
                     </tbody>
@@ -123,8 +135,18 @@
       new DataTable("#productTable", {
         order: "ASC",
         columnDefs: [
-          { width: 180, targets: 2 },
+          {
+            width: 100,
+            targets: 0, // Targets the first column
+            type: "html", // Explicitly set the type to HTML to prevent automatic type detection
+            className: "", // Resets or specifies classes to apply to cells in this column
+            orderable: false, // Optional: disable ordering if it's not needed for the thumbnail column
+            searchable: false, // Optional: disable searching on this column
+          },
+          { width: 250, targets: 1 },
+          { width: 150, targets: 2 },
           { width: 150, targets: 3 },
+          // { width: 100, targets: 4 },
         ],
       });
     </script>
