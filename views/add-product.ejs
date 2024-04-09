@@ -332,7 +332,7 @@
                 );
                 accumulatedFiles.splice(removeIndex, 1);
                 updatePreviews(); // Update the preview area after removing an item
-                document.getElementById("images").value = ""; // Reset file input to ensure you can reselect the same file if needed
+                // document.getElementById("images").value = ""; // Reset file input to ensure you can reselect the same file if needed
                 setLoading(false); // Reset loading state
               });
           };
@@ -444,10 +444,12 @@
         );
 
         // Collecting files
-        const files = document.getElementById("images").files;
-        for (let i = 0; i < files.length; i++) {
-          formData.append("images", files[i]);
+        // const files = document.getElementById("images").files;
+
+        for (let i = 0; i < accumulatedFiles.length; i++) {
+          formData.append("images", accumulatedFiles[i]);
         }
+
         function getCookie(name) {
           let cookieValue = null;
           if (document.cookie && document.cookie !== "") {
@@ -505,16 +507,20 @@
 
         if (logoutButton) {
           logoutButton.addEventListener("click", () => {
-            axios
-              .post(`${API_URL}/logout`, {}, { withCredentials: true })
-              .then((response) => {
-                console.log("Logged out successfully");
-                localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
-                window.location.href = "/";
-              })
-              .catch((error) => {
-                console.error("Error logging out:", error);
-              });
+            // axios
+            //   .post(`${API_URL}/logout`, {}, { withCredentials: true })
+            //   .then((response) => {
+            //     console.log("Logged out successfully");
+            //     localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
+            //     window.location.href = "/";
+            //   })
+            //   .catch((error) => {
+            //     console.error("Error logging out:", error);
+            //   });
+            document.cookie =
+              "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            console.log("Logged out successfully");
+            window.location.href = "/";
           });
         }
       });
