@@ -37,16 +37,20 @@
         console.log(API_URL);
         if (logoutButton) {
           logoutButton.addEventListener("click", () => {
-            axios
-              .post(`${API_URL}/logout`, {}, { withCredentials: true })
-              .then((response) => {
-                console.log("Logged out successfully");
-                localStorage.removeItem("loginToken");
-                window.location.href = "/";
-              })
-              .catch((error) => {
-                console.error("Error logging out:", error);
-              });
+            // axios
+            //   .post(`${API_URL}/logout`, {}, { withCredentials: true })
+            //   .then((response) => {
+            //     console.log("Logged out successfully");
+            //     localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
+            //     window.location.href = "/";
+            //   })
+            //   .catch((error) => {
+            //     console.error("Error logging out:", error);
+            //   });
+            document.cookie =
+              "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            console.log("Logged out successfully");
+            window.location.href = "/";
           });
         }
       });
