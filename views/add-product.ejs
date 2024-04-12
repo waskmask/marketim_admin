@@ -401,7 +401,7 @@
             message: "Unit type and unit volume are required.",
           },
           {
-            condition: document.getElementById("images").files.length > 0,
+            condition: accumulatedFiles.length > 0,
             message: "Please upload at least one image.",
           },
         ];
@@ -444,10 +444,9 @@
         );
 
         // Collecting files
-        const files = document.getElementById("images").files;
-        for (let i = 0; i < files.length; i++) {
-          formData.append("images", files[i]);
-        }
+        accumulatedFiles.forEach((file, index) => {
+          formData.append(`images[${index}]`, file);
+        });
         function getCookie(name) {
           let cookieValue = null;
           if (document.cookie && document.cookie !== "") {
@@ -488,6 +487,7 @@
                 document.getElementById("addProductForm").reset();
                 accumulatedFiles = []; // Clear accumulated files array
                 updatePreviews(); // Update the previews to clear them
+                document.getElementById("images").value = "";
                 addProductBtn.textContent = "Add product";
               }
             );
