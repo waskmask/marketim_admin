@@ -30,7 +30,7 @@
             <div class="col-lg-5 offset-lg-1 p-0">
               <div class="card border-0 space_object">
                 <div class="card-header bg-white py-3">
-                  <div class="title">Add new product</div>
+                  <div class="title">Neues Produkt hinzufügen</div>
                 </div>
                 <div class="card-body">
                   <div class="mb-3">
@@ -56,7 +56,7 @@
 
                   <div class="mb-3">
                     <label for="categories" class="form-label">
-                      Categories
+                      Kategorien
                     </label>
                     <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
                       <% categories.forEach(function(category) { %>
@@ -96,7 +96,7 @@
                           class="form-check-label text-capitalize"
                           for="bio-yes"
                         >
-                          Yes
+                          Ja
                         </label>
                       </div>
                       <div class="form-check">
@@ -112,7 +112,7 @@
                           class="form-check-label text-capitalize"
                           for="bio-no"
                         >
-                          No
+                          Nein
                         </label>
                       </div>
                     </div>
@@ -120,7 +120,7 @@
 
                   <div class="mb-3">
                     <label for="Halal" class="form-label text-success">
-                      Halal
+                      Helal
                     </label>
                     <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
                       <div class="form-check">
@@ -135,7 +135,7 @@
                           class="form-check-label text-capitalize"
                           for="halal-yes"
                         >
-                          Yes
+                          Ja
                         </label>
                       </div>
                       <div class="form-check">
@@ -151,27 +151,85 @@
                           class="form-check-label text-capitalize"
                           for="halal-no"
                         >
-                          No
+                          Nein
                         </label>
                       </div>
                     </div>
                   </div>
+
+                  <div class="mb-3">
+                    <label for="vegan" class="form-label text-success">
+                      Vegan
+                    </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="true"
+                          id="vegan-yes"
+                          name="vegan"
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="vegan-yes"
+                        >
+                          Ja
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="false"
+                          id="vegan-no"
+                          name="vegan"
+                          checked
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="vegan-no"
+                        >
+                          Nein
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
                   <div class="row">
+                    <div class="mb-3 col-md-6">
+                      <label for="brand" class="form-label"> Marke </label>
+                      <select id="brand" class="form-select">
+                        <option value="">Wählen</option>
+                        <% brands.forEach(function(brand) { %>
+                        <option value="<%= brand._id %>">
+                          <%= brand.brandName %>
+                        </option>
+                        <% }); %>
+                      </select>
+                    </div>
                     <div class="mb-3 col-md-6">
                       <label for="handelClass" class="form-label">
                         Handel Klass
                       </label>
                       <select id="handelClass" class="form-select">
-                        <option value="">Select</option>
-                        <option value="Class A">Class A</option>
-                        <option value="Class B">Class B</option>
-                        <option value="Class C">Class C</option>
+                        <option value="">Wählen</option>
+                        <option value="HKL I">HKL I</option>
+                        <option value="HKL II">HKL II</option>
+                        <option value="HKL III">HKL III</option>
                       </select>
                     </div>
+                  </div>
+
+                  <div class="row">
                     <div class="mb-3 col-md-6">
-                      <label for="base_price" class="form-label">
-                        Base price
+                      <label for="unit_price" class="form-label">
+                        Einzelpreis
                       </label>
+                      <input type="text" class="form-control" id="unit_price" />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                      <label for="base_price" class="form-label"> Preis </label>
                       <input
                         type="text"
                         class="form-control"
@@ -184,28 +242,50 @@
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="unit_type" class="form-label">
-                        Weight (unit type)
+                        Gewicht typ (unit type)
                       </label>
-                      <select name="" id="unit_type" class="form-select">
-                        <option value="">Select</option>
-                        <option value="kg">kg</option>
-                        <option value="ltr">Ltr</option>
-                        <option value="grm">grams</option>
-                        <option value="ounce">Ounce</option>
+                      <select
+                        name="unit_type"
+                        id="unit_type"
+                        class="form-select"
+                      >
+                        <option value="">Wählen</option>
+                        <option value="pack">Paket birimi</option>
+                        <option value="g">G</option>
+                        <option value="kg">Kg</option>
+                        <option value="l">L</option>
+                        <option value="ml">Ml</option>
+                        <option value="tane">Tane</option>
+                        <option value="ons">Ons</option>
                       </select>
                     </div>
 
                     <div class="col-md-6 mb-3">
                       <label for="unit_vol" class="form-label">
-                        Weight (unit vol)
+                        Gewicht (unit vol)
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         class="form-control"
                         id="unit_vol"
-                        placeholder="e.g., 2kg"
+                        placeholder="z.B. 2kg"
                       />
                     </div>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="package_type" class="form-label">
+                      Pakettyp (package type)
+                    </label>
+                    <select name="" id="package_type" class="form-select">
+                      <option value="">Wählen</option>
+                      <option value="carton">Karton</option>
+                      <option value="pack">Packung</option>
+                      <option value="packet">Packet</option>
+                      <option value="jar">Krug</option>
+                      <option value="bottle">Flasche</option>
+                      <option value="canned">Dosen</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -214,7 +294,7 @@
               <div class="card border-0 space_object">
                 <div class="card-header bg-white py-3">
                   <div class="title">
-                    <i class="fa-regular fa-image"></i> Add product media
+                    <i class="fa-regular fa-image"></i> Produktmedien hinzufügen
                   </div>
                 </div>
                 <div class="card-body">
@@ -224,7 +304,7 @@
                       class="form-label file-label"
                       id="toggleFileInput"
                     >
-                      <i class="fa-solid fa-plus"></i> Add images
+                      <i class="fa-solid fa-plus"></i> Füge Bilder hinzu
                     </label>
                     <input
                       type="file"
@@ -240,17 +320,17 @@
                   </div>
 
                   <div class="form-alert success d-none" id="successAlert">
-                    Category added successfully!
+                    Produkt erfolgreich hinzugefügt!
                   </div>
                   <div class="form-alert d-none error" id="errorAlert">
-                    Error adding category
+                    Fehler beim Hinzufügen der Kategorie
                   </div>
                   <button
                     type="button"
                     id="addProductBtn"
                     class="btn btn-primary mt-2 mb-2"
                   >
-                    Add product
+                    Produkt hinzufügen
                   </button>
                 </div>
               </div>
@@ -269,7 +349,7 @@
     ></script>
     <script src="/public/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/public/js/sweetalert.min.js"></script>
     <script src="/public/js/theme.js"></script>
 
     <script>
@@ -343,9 +423,10 @@
       function setLoading(loading) {
         const label = document.getElementById("toggleFileInput");
         if (loading) {
-          label.textContent = "Loading..."; // Set label to Loading... during operation
+          label.textContent = "Wird geladen..."; // Set label to Loading... during operation
         } else {
-          label.innerHTML = '<i class="fa-solid fa-plus"></i> Add images'; // Reset label after operation
+          label.innerHTML =
+            '<i class="fa-solid fa-plus"></i> Füge Bilder hinzu'; // Reset label after operation
         }
       }
     </script>
@@ -365,7 +446,11 @@
         });
 
         if (!oneTitleFilled) {
-          swal("Error", "Please fill in at least one title.", "error");
+          swal(
+            "Error",
+            "Bitte füllen Sie mindestens einen Titel aus.",
+            "error"
+          );
           return;
         }
 
@@ -382,27 +467,27 @@
             condition:
               document.querySelectorAll('input[name="categories"]:checked')
                 .length > 0,
-            message: "Please select at least one category.",
+            message: "Bitte wählen Sie mindestens eine Kategorie aus.",
           },
           {
             condition:
               document.getElementById("handelClass").value.trim() !== "",
-            message: "Please select a handle class.",
+            message: "Bitte wählen Sie eine Handle-Klasse aus.",
           },
           {
             condition:
               document.getElementById("base_price").value.trim() !== "",
-            message: "Please add a base price.",
+            message: "Bitte geben Sie einen Grundpreis an.",
           },
           {
             condition:
               document.getElementById("unit_type").value.trim() !== "" &&
               document.getElementById("unit_vol").value.trim() !== "",
-            message: "Unit type and unit volume are required.",
+            message: "Gerätetyp und Gerätevolumen sind erforderlich.",
           },
           {
             condition: accumulatedFiles.length > 0,
-            message: "Please upload at least one image.",
+            message: "Bitte laden Sie mindestens ein Bild hoch.",
           },
         ];
 
@@ -428,11 +513,28 @@
           "isHalal",
           document.querySelector('input[name="halal"]:checked').value
         );
+        formData.append(
+          "vegan",
+          document.querySelector('input[name="vegan"]:checked').value
+        );
 
         // Collecting dropdown selections
+        formData.append("brand", document.getElementById("brand").value);
         formData.append(
           "handelClass",
           document.getElementById("handelClass").value
+        );
+        formData.append(
+          "unit_price",
+          document.getElementById("unit_price").value
+        );
+        formData.append(
+          "base_price",
+          document.getElementById("base_price").value
+        );
+        formData.append(
+          "package_type",
+          document.getElementById("package_type").value
         );
         formData.append(
           "weight[unit_type]",
@@ -469,7 +571,7 @@
 
         // Retrieve the loginToken from cookies
         const loginToken = getCookie("loginToken");
-        addProductBtn.textContent = "Loading...";
+        addProductBtn.textContent = "Wird geladen...";
 
         fetch(`${API_URL}/add-product`, {
           method: "POST",
@@ -485,19 +587,23 @@
             return response.json();
           })
           .then((data) => {
-            swal("Success", "Product successfully added!", "success").then(
+            swal("Success", "Produkt erfolgreich hinzugefügt!", "success").then(
               () => {
                 document.getElementById("addProductForm").reset();
                 accumulatedFiles = []; // Clear accumulated files array
                 updatePreviews(); // Update the previews to clear them
                 document.getElementById("images").value = "";
-                addProductBtn.textContent = "Add product";
+                addProductBtn.textContent = "Produkt hinzufügen";
               }
             );
           })
           .catch((error) => {
             console.error("Error:", error);
-            swal("Error", "There was a problem adding the product.", "error");
+            swal(
+              "Error",
+              "Beim Hinzufügen des Produkts ist ein Problem aufgetreten.",
+              "error"
+            );
           });
       });
     </script>
@@ -520,7 +626,6 @@
             //   });
             document.cookie =
               "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            console.log("Logged out successfully");
             window.location.href = "/";
           });
         }

@@ -25,12 +25,12 @@ app.use(authRoutes);
 app.use(dashboardRoutes);
 
 app.use((error, req, res, next) => {
-  console.error(error); // Log the error for debugging purposes
-  res.status(error.status || 500).json({
-    error: {
-      message: error.message || "Internal Server Error",
-    },
-  });
+  console.error(error.stack);
+  if (!res.headersSent) {
+    res.status(500).render("error", { message: "An internal error occurred" });
+  } else {
+    console.error("Error after headers sent");
+  }
 });
 
 app.listen(port, () => {

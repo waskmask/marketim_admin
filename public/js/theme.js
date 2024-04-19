@@ -43,4 +43,23 @@ document.addEventListener("DOMContentLoaded", () => {
       window.open("/add-product", "_blank");
     });
   }
+
+  //
+  var ddToggle = document.querySelector(".dd-toggle");
+  var ddContainer = document.querySelector(".dd-container");
+
+  if (ddToggle && ddContainer) {
+    // Toggle .active class on click
+    ddToggle.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent click from immediately propagating to document
+      ddContainer.classList.toggle("active");
+    });
+
+    // Remove .active class when clicking anywhere else
+    document.addEventListener("click", function () {
+      if (ddContainer.classList.contains("active")) {
+        ddContainer.classList.remove("active");
+      }
+    });
+  }
 });

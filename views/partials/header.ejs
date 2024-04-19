@@ -23,15 +23,22 @@
           <a
             class="<%= path === '/products' ? 'active' : '' %>"
             href="<%= path === '/products' ? 'javascript:void(0)' : '/products' %>"
-            >Products</a
+            >Produkte</a
           >
         </li>
-        <li>
+
+        <li class="menu-dd">
           <a
-            class="<%= path === '/master' ? 'active' : '' %>"
-            href="<%= path === '/master' ? 'javascript:void(0)' : '/product-categories' %>"
-            >Master data</a
+            class="<%= path === '/master' ? 'active' : '' %> dd-toggle"
+            href="javascript:void(0)"
+            >Stammdaten</a
           >
+          <div class="dd-container shadow-sm">
+            <ul>
+              <li><a href="/product-categories">Produktkategorien</a></li>
+              <li><a href="/brands">Marken</a></li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
@@ -45,7 +52,7 @@
         <div class="divi"></div>
         <div class="logout">
           <a href="javascript:void(0)" id="logoutButton"
-            ><i class="fa-solid fa-right-from-bracket"></i> Logout</a
+            ><i class="fa-solid fa-right-from-bracket"></i> Ausloggen</a
           >
         </div>
       </div>

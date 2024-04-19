@@ -27,27 +27,46 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col">
-            <div class="title py-3 text-primary">Kategorien</div>
+            <div class="title py-3 text-primary">Marken</div>
           </div>
         </div>
         <div class="row">
           <div class="col-lg-6 p-0">
             <div class="card border-0 space_object">
               <div class="card-header bg-white py-3">
-                <div class="title">Kategorie hinzufügen</div>
+                <div class="title">Marke hinzufügen</div>
               </div>
               <div class="card-body">
-                <form action="/product-categories" method="POST">
+                <form action="/add-brand" method="POST">
                   <div class="mb-3">
-                    <label for="categoryName" class="form-label">
-                      Kategoriename
+                    <label for="brandName" class="form-label">
+                      Markenname
                     </label>
                     <input
                       type="text"
                       class="form-control"
-                      id="categoryName"
+                      id="brandName"
                       required
                     />
+                  </div>
+                  <div class="mb-3">
+                    <label
+                      for="images"
+                      class="form-label file-label"
+                      id="toggleFileInput"
+                    >
+                      <i class="fa-solid fa-plus"></i> Markenlogo hinzufügen
+                    </label>
+                    <input
+                      type="file"
+                      class="d-none"
+                      name="brandLogo"
+                      id="brandLogo"
+                      accept="image/*"
+                      required
+                    />
+
+                    <div class="img-preview mt-3" id="preview"></div>
                   </div>
                   <div class="mb-3">
                     <label for="status" class="form-label"> Status </label>
@@ -57,17 +76,17 @@
                     </select>
                   </div>
                   <div class="form-alert success d-none" id="successAlert">
-                    Kategorie erfolgreich hinzugefügt!
+                    Marke erfolgreich hinzugefügt!
                   </div>
                   <div class="form-alert d-none error" id="errorAlert">
-                    Fehler beim Hinzufügen der Kategorie
+                    Fehler beim Hinzufügen der Marke
                   </div>
                   <button
                     type="button"
-                    id="addCategoryBtn"
+                    id="addBrandBtn"
                     class="btn btn-primary mt-2 mb-2"
                   >
-                    Kategorie hinzufügen
+                    Marke hinzufügen
                   </button>
                 </form>
               </div>
@@ -76,43 +95,46 @@
           <div class="col-lg-6 p-0 mb-4">
             <div class="card border-0 space_object">
               <div class="card-header bg-white py-3">
-                <div class="title">Kategorieliste</div>
+                <div class="title">BMarkenliste</div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
                       <tr>
+                        <th>Bild</th>
                         <th>Name</th>
                         <th>Status</th>
                         <th>Aktion</th>
                       </tr>
                     </thead>
-                    <tbody id="categoriesTable">
-                      <% categories.forEach(function(category) { %>
+                    <tbody id="brandTable">
+                      <% brands.forEach(function(brand) { %>
                       <tr>
                         <td>
-                          <input
-                            type="text"
-                            required
-                            class="category-input form-control text-capitalize"
-                            id="categoryName<%- category._id %>"
-                            value="<%- category.categoryName %>"
-                            data-id="<%- category._id %>"
+                          <% if(brand.brandLogo || !brand.brandLogo == "") {%>
+                          <img
+                            class="pro-avatar"
+                            src="https://hl-fc.de/uploads/<%- brand.brandLogo %>"
+                            alt=""
                           />
+                          <% } else {%>
+                          <div class="noimg">No img</div>
+                          <%}%>
                         </td>
+                        <td><%- brand.brandName %></td>
                         <td>
                           <span
-                            class="status <%- category.status %> text-capitalize"
-                            ><%- category.status %></span
+                            class="status <%- brand.status %> text-capitalize"
+                            ><%- brand.status %></span
                           >
                         </td>
                         <td>
                           <div class="form-check form-switch">
                             <input class="form-check-input status-switch"
-                            type="checkbox" role="switch" id="<%- category._id
-                            %>" <% if(category.status === 'active') { %> checked
-                            <% } %> />
+                            type="checkbox" role="switch" id="<%- brand._id %>"
+                            <% if(brand.status === 'active') { %> checked <% }
+                            %> />
                           </div>
                         </td>
                       </tr>
@@ -137,6 +159,71 @@
     <script src="/public/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/public/js/theme.js"></script>
+    <script>
+      document
+        .getElementById("toggleFileInput")
+        .addEventListener("click", function () {
+          document.getElementById("brandLogo").click();
+        });
+
+      // Listen for file selection on the file input
+      document
+        .getElementById("brandLogo")
+        .addEventListener("change", function (e) {
+          setLoading(true); // Set loading state
+
+          // Since only a single file is handled, directly work with the selected file
+          const file = e.target.files[0]; // Get the first (and only) file
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              // Once the file is loaded, reset loading state and update previews
+              setLoading(false);
+              updatePreview(reader.result); // Pass the file's data URL to the updatePreview function
+            };
+            reader.readAsDataURL(file);
+          } else {
+            // In case no file was selected
+            setLoading(false);
+          }
+        });
+
+      function updatePreview(dataUrl) {
+        const previewContainer = document.getElementById("preview");
+
+        // Clear the preview container's inner HTML if no data URL is provided (i.e., reset or delete action)
+        if (!dataUrl) {
+          previewContainer.innerHTML = "";
+          return;
+        }
+
+        // If a data URL is provided, create and append the new preview item
+        const previewItem = document.createElement("div");
+        previewItem.classList.add("preview-item");
+
+        previewItem.innerHTML = `
+    <img src="${dataUrl}" alt="preview"/>
+    <div class="remove-img" onclick="removePreview()"><i class="fa-solid fa-trash"></i></div>
+  `;
+
+        previewContainer.appendChild(previewItem);
+      }
+      function removePreview() {
+        setLoading(true); // Optionally set loading state
+        document.getElementById("brandLogo").value = ""; // Reset file input
+        updatePreview(null); // Clear the preview by not providing a data URL
+        setLoading(false); // Optionally reset loading state
+      }
+      function setLoading(loading) {
+        const label = document.getElementById("toggleFileInput");
+        if (loading) {
+          label.textContent = "Wird geladen..."; // Set label to Loading... during operation
+        } else {
+          label.innerHTML = '<i class="fa-solid fa-plus"></i> Bild hinzufügen'; // Reset label after operation
+        }
+      }
+    </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         function getCookie(name) {
@@ -167,53 +254,61 @@
           },
         };
 
-        const categorySubmit = document.getElementById("addCategoryBtn");
+        const brandSubmit = document.getElementById("addBrandBtn");
 
-        categorySubmit.addEventListener("click", function () {
-          categorySubmit.textContent = "Hinzufügen...";
+        brandSubmit.addEventListener("click", function () {
+          brandSubmit.textContent = "Adding..";
 
-          const categoryName = document
-            .getElementById("categoryName")
-            .value.trim();
-          const status = document.getElementById("status").value;
+          const formData = new FormData();
+          formData.append(
+            "brandName",
+            document.getElementById("brandName").value.trim()
+          );
+          formData.append("status", document.getElementById("status").value);
+
+          const brandLogo = document.getElementById("brandLogo").files[0];
+          if (brandLogo) {
+            formData.append("brandLogo", brandLogo);
+          }
 
           axios
-            .post(`${API_URL}/add-category`, { categoryName, status }, config)
+            .post(`${API_URL}/add-brand`, formData, {
+              headers: {
+                Authorization: `Bearer ${loginToken}`,
+              },
+            })
             .then(function (response) {
-              // Handle success
-              document
-                .getElementById("successAlert")
-                .classList.remove("d-none");
-              document.getElementById("errorAlert").classList.add("d-none");
+              const brand = response.data.brand;
+              const brandName = brand.brandName; // Now correctly accessing the nested property
+              const brandStatus = brand.status; // Now correctly accessing the nested property
+              const brandLogoUrl = brand.brandLogo; // Assuming this is a relative URL to the logo image
 
-              document.getElementById("categoryName").value = "";
-              categorySubmit.textContent = "Kategorie hinzufügen";
-              const categoriesTable =
-                document.getElementById("categoriesTable");
+              // Assuming the logo needs to be accessed via a full URL path
+              // Adjust `baseUrl` to the directory where images are served from
+              const baseUrl = "https://hl-fc.de/uploads/";
+              const fullLogoUrl = baseUrl + brandLogoUrl;
 
-              // Use values from the form inputs directly, assuming they represent the latest added category
-              // You may need a method to generate or retrieve a unique ID if your table structure requires it
-              const newRow = `
-        <tr>
-            <td>
-                <input type="text" readonly required class="category-input form-control" 
-                id="categoryName${Date.now()}" value="${categoryName}" 
-                data-id="${Date.now()}"> <!-- Assuming Date.now() as a placeholder -->
-            </td>
-            <td>
-                <span class="status ${status} text-capitalize">${status}</span>
-            </td>
-            <td>
-                <a href=''><i class="fa-solid fa-rotate-right"></i></a>
-            </td>
-        </tr>
-    `;
+              const brandTable = document.getElementById("brandTable");
+              const newRow = document.createElement("tr");
+              newRow.innerHTML = `
+    <td><img class="pro-avatar" src="${fullLogoUrl}" alt="Brand Logo"></td>
+    <td>${brandName}</td>
+    <td> <span class="status active text-capitalize">${brandStatus}</span></td>
+    <td><a href=""><i class="fa-solid fa-rotate-right"></i></a></td>
+  `;
 
-              // Prepend the new row
-              categoriesTable.insertAdjacentHTML("afterbegin", newRow);
+              brandTable.prepend(newRow); // Adds the new row at the beginning of the table
+
+              // Clear success alert after a while
               setTimeout(() => {
                 document.getElementById("successAlert").classList.add("d-none");
               }, 2000);
+
+              // Clear the form and reset UI elements
+              document.getElementById("brandName").value = "";
+              document.getElementById("brandLogo").value = ""; // Reset the file input
+              document.getElementById("preview").innerHTML = ""; // Clear the image preview
+              brandSubmit.textContent = "Add brand"; // Reset the button text
             })
             .catch(function (error) {
               // Handle error
@@ -221,32 +316,9 @@
               document.getElementById("successAlert").classList.add("d-none");
               document.getElementById("errorAlert").innerText =
                 error.response.data.message;
-              categorySubmit.textContent = "Kategorie hinzufügen";
+              brandSubmit.textContent = "Marke hinzufügen";
               console.error(error);
             });
-        });
-
-        // Event listener for category name changes
-        document.querySelectorAll(".category-input").forEach((input) => {
-          input.addEventListener("blur", function () {
-            const id = this.getAttribute("data-id");
-            const categoryName = this.value.trim();
-
-            if (!categoryName) {
-              showToast("Der Kategoriename darf nicht leer sein", "Error");
-              return;
-            }
-
-            axios
-              .patch(`${API_URL}/update-category`, { id, categoryName }, config)
-              .then((response) => {
-                showToast("Kategorie erfolgreich aktualisiert", "Success");
-              })
-              .catch((error) => {
-                console.error("Error:", error);
-                showToast("Fehler beim Aktualisieren der Kategorie", "Error");
-              });
-          });
         });
 
         // Event listener for status changes
@@ -258,7 +330,7 @@
               const status = this.checked ? "active" : "inactive";
 
               axios
-                .patch(`${API_URL}/update-category`, { id, status }, config)
+                .patch(`${API_URL}/update-brand-status`, { id, status }, config)
                 .then((response) => {
                   const statusSpan =
                     this.closest("tr").querySelector(".status");
@@ -270,7 +342,7 @@
                 })
                 .catch((error) => {
                   console.error("Error:", error);
-                  showToast("Fehler beim Aktualisieren der Kategorie", "Error");
+                  showToast("Fehler beim Aktualisieren der Marke", "Error");
                 });
             });
           });
@@ -300,22 +372,13 @@
           toastEl.classList.add("d-none");
         }, 3000);
       }
-
+    </script>
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
         const logoutButton = document.querySelector("#logoutButton");
 
         if (logoutButton) {
           logoutButton.addEventListener("click", () => {
-            // axios
-            //   .post(`${API_URL}/logout`, {}, { withCredentials: true })
-            //   .then((response) => {
-            //     console.log("Logged out successfully");
-            //     localStorage.removeItem("loginToken"); // Appropriate if you're using localStorage for additional token storage
-            //     window.location.href = "/";
-            //   })
-            //   .catch((error) => {
-            //     console.error("Error logging out:", error);
-            //   });
             document.cookie =
               "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             console.log("Logged out successfully");
