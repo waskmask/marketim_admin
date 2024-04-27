@@ -47,11 +47,11 @@
                 </div>
                 <div class="d-flex flex-wrap flex-column align-items-end gap-3">
                   <div>
-                    <span class="status <%-product.status%>">Active</span>
+                    <span class="status <%-product.status%>">Aktiv</span>
                   </div>
                   <div>
-                    Added on: <%- new Date(product.createdAt).toLocaleString()
-                    %>
+                    Hinzugefügt zu: <%- new
+                    Date(product.createdAt).toLocaleString() %>
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@
           <div class="col-md-6">
             <div class="card border-0 space_object">
               <div class="card-body">
-                <div class="item-title mb-3">Product media:</div>
+                <div class="item-title mb-3">Produktmedien:</div>
                 <div class="view-product-images">
                   <% product.images.forEach(function(imageUrl, index) { %>
                   <a
@@ -85,7 +85,7 @@
           <div class="col-md-6">
             <div class="card border-0 space_object">
               <div class="card-body">
-                <div class="item-title mb-1">Categories:</div>
+                <div class="item-title mb-1">Kategorien:</div>
                 <div class="product-items">
                   <% if(product.categories && product.categories.length > 0){ %>
                   <% product.categories.forEach(function(category) { %>
@@ -96,7 +96,7 @@
                   <% }); %> <% } %>
                 </div>
 
-                <div class="item-title mb-1 mt-2">Brand:</div>
+                <div class="item-title mb-1 mt-2">Markenname:</div>
                 <div class="product-items">
                   <% if(product.brand && product.brand.length > 0){ %> <%
                   product.brand.forEach(function(brand) { %>
@@ -135,7 +135,9 @@
                   <div>
                     <div class="item-title mb-1 mt-3">Handel klass:</div>
                     <div class="sub-item text-capitalize">
-                      <%= product.handelClass %>
+                      <% if(product.handelClass){ %>
+                      <span><%= product.handelClass %></span>
+                      <%} else { %> N/A <% } %>
                     </div>
                   </div>
 
@@ -152,17 +154,17 @@
                     <div class="item-title mb-1 mt-3">Halal:</div>
                     <div class="sub-item text-capitalize">
                       <% if(product.isHalal) { %>
-                      <span class="text-success">Yes</span> <% } else { %> No <%
-                      } %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
                     </div>
                   </div>
 
                   <div>
-                    <div class="item-title mb-1 mt-3">Organic:</div>
+                    <div class="item-title mb-1 mt-3">Bio:</div>
                     <div class="sub-item text-capitalize">
                       <% if(product.organic) { %>
-                      <span class="text-success">Yes</span> <% } else { %> No <%
-                      } %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
                     </div>
                   </div>
 
@@ -170,8 +172,55 @@
                     <div class="item-title mb-1 mt-3">Vegan:</div>
                     <div class="sub-item text-capitalize">
                       <% if(product.vegan) { %>
-                      <span class="text-success">Yes</span> <% } else { %> No <%
-                      } %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="item-title mb-1 mt-3">Vegetarian:</div>
+                    <div class="sub-item text-capitalize">
+                      <% if(product.vegetarian) { %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="item-title mb-1 mt-3">Laktosefrei:</div>
+                    <div class="sub-item text-capitalize">
+                      <% if(product.lactose_free) { %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="item-title mb-1 mt-3">Glutenfrei:</div>
+                    <div class="sub-item text-capitalize">
+                      <% if(product.gluten_free) { %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-4 flex-wrap green-items">
+                  <div>
+                    <div class="item-title mb-1 mt-3">Pfand:</div>
+                    <div class="sub-item text-capitalize">
+                      <% if(product.deposit) { %>
+                      <span class="text-success">Ja</span> <% } else { %> Nein
+                      <% } %>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="item-title mb-1 mt-3">Ursprungsland:</div>
+                    <div class="sub-item text-capitalize">
+                      <% if(product.origin) { %>
+                      <span class="text-success"><%-product.origin%></span> <% }
+                      else { %> N/A <% } %>
                     </div>
                   </div>
                 </div>

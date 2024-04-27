@@ -81,117 +81,239 @@
                     </div>
                   </div>
 
-                  <div class="mb-3">
-                    <label for="bio" class="form-label"> Bio </label>
-                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="true"
-                          id="bio-yes"
-                          name="bio"
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="bio-yes"
-                        >
-                          Ja
-                        </label>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label for="bio" class="form-label"> Bio </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="bio-yes"
+                              name="bio"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="bio-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="bio-no"
+                              name="bio"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="bio-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="false"
-                          id="bio-no"
-                          name="bio"
-                          checked
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="bio-no"
-                        >
-                          Nein
+                      <div class="mb-3">
+                        <label for="vegan" class="form-label text-success">
+                          Vegan
                         </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="vegan-yes"
+                              name="vegan"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="vegan-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="vegan-no"
+                              name="vegan"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="vegan-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="Halal" class="form-label text-success">
+                          Helal
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="halal-yes"
+                              name="halal"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="halal-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="halal-no"
+                              name="halal"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="halal-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="Halal" class="form-label text-success">
-                      Helal
-                    </label>
-                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="true"
-                          id="halal-yes"
-                          name="halal"
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="halal-yes"
-                        >
-                          Ja
+                    <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label class="form-label text-success">
+                          Vegetarian
                         </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="vegetarian-yes"
+                              name="vegetarian"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="vegetarian-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="vegetarian-no"
+                              name="vegetarian"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="vegetarian-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="false"
-                          id="halal-no"
-                          name="halal"
-                          checked
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="halal-no"
-                        >
-                          Nein
-                        </label>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="vegan" class="form-label text-success">
-                      Vegan
-                    </label>
-                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="true"
-                          id="vegan-yes"
-                          name="vegan"
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="vegan-yes"
-                        >
-                          Ja
+                      <div class="mb-3">
+                        <label for="lactose" class="form-label">
+                          Lactose Free
                         </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="lactose_free-yes"
+                              name="lactose_free"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="lactose_free-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="lactose_free-no"
+                              name="lactose_free"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="lactose_free-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
                       </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          value="false"
-                          id="vegan-no"
-                          name="vegan"
-                          checked
-                        />
-                        <label
-                          class="form-check-label text-capitalize"
-                          for="vegan-no"
-                        >
-                          Nein
+
+                      <div class="mb-3">
+                        <label for="gluten" class="form-label">
+                          Gluten Free
                         </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="gluten_free-yes"
+                              name="gluten_free"
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="gluten_free-yes"
+                            >
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="gluten_free-no"
+                              name="gluten_free"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-capitalize"
+                              for="gluten_free-no"
+                            >
+                              Nein
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -224,7 +346,7 @@
                   <div class="row">
                     <div class="mb-3 col-md-6">
                       <label for="unit_price" class="form-label">
-                        Einzelpreis
+                        Eiheitspreis
                       </label>
                       <input type="text" class="form-control" id="unit_price" />
                     </div>
@@ -250,13 +372,12 @@
                         class="form-select"
                       >
                         <option value="">Wählen</option>
-                        <option value="pack">Paket birimi</option>
-                        <option value="g">G</option>
-                        <option value="kg">Kg</option>
-                        <option value="l">L</option>
-                        <option value="ml">Ml</option>
-                        <option value="tane">Tane</option>
-                        <option value="ons">Ons</option>
+                        <option value="g">g</option>
+                        <option value="kg">kg</option>
+                        <option value="liter">Liter</option>
+                        <option value="ml">ml</option>
+                        <option value="unit">Einheit</option>
+                        <option value="ounce">Unze</option>
                       </select>
                     </div>
 
@@ -279,12 +400,37 @@
                     </label>
                     <select name="" id="package_type" class="form-select">
                       <option value="">Wählen</option>
+                      <option value="canned">Dosen</option>
+                      <option value="bucket">Eimer</option>
+                      <option value="bottle">Flasche</option>
+                      <option value="glass">Glas</option>
+                      <option value="jar">Krug</option>
                       <option value="carton">Karton</option>
+                      <option value="basket">Korb</option>
+                      <option value="box">Kiste</option>
                       <option value="pack">Packung</option>
                       <option value="packet">Packet</option>
-                      <option value="jar">Krug</option>
-                      <option value="bottle">Flasche</option>
-                      <option value="canned">Dosen</option>
+                      <option value="pet">PET</option>
+                      <option value="pet_bottle">PET-Flasche</option>
+                      <option value="dispenser_bottle">Spenderflasche</option>
+                      <option value="bag">Sack</option>
+                      <option value="piece">Stück</option>
+                      <option value="tube">Tube</option>
+                      <option value="pot">Topf</option>
+                      <option value="blackboard">Tafel</option>
+                      <option value="wash_loads">Waschladungen</option>
+                      <option value="2 pack">2er Pack</option>
+                      <option value="4 pack">4er Pack</option>
+                      <option value="6 pack">6er Pack</option>
+                      <option value="8 pack">8er Pack</option>
+                      <option value="10 pack">10er Pack</option>
+                      <option value="12 pack">12er Pack</option>
+                      <option value="14 pack">14er Pack</option>
+                      <option value="16 pack">16er Pack</option>
+                      <option value="18 pack">18er Pack</option>
+                      <option value="20 pack">20er Pack</option>
+                      <option value="22 pack">22er Pack</option>
+                      <option value="24 pack">24er Pack</option>
                     </select>
                   </div>
                 </div>
@@ -317,6 +463,54 @@
                     />
 
                     <div class="img-preview mt-3" id="preview"></div>
+                  </div>
+
+                  <div class="my-3">
+                    <label for="origin" class="form-label"
+                      >Ursprungsland
+                    </label>
+                    <select name="" id="origin" class="form-select">
+                      <option value="">Wählen</option>
+                      <option value="balkan products">Balkan products</option>
+                      <option value="arabic products">Arabic products</option>
+                      <option value="Turkish products">Turkish products</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="deposit" class="form-label"> Pfand </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="true"
+                          id="deposit-yes"
+                          name="deposit"
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="deposit-yes"
+                        >
+                          Ja
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="false"
+                          id="deposit-no"
+                          name="deposit"
+                          checked
+                        />
+                        <label
+                          class="form-check-label text-capitalize"
+                          for="deposit-no"
+                        >
+                          Nein
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-alert success d-none" id="successAlert">
@@ -433,6 +627,7 @@
 
     <script>
       const addProductBtn = document.getElementById("addProductBtn");
+
       addProductBtn.addEventListener("click", function (e) {
         e.preventDefault();
 
@@ -468,11 +663,6 @@
               document.querySelectorAll('input[name="categories"]:checked')
                 .length > 0,
             message: "Bitte wählen Sie mindestens eine Kategorie aus.",
-          },
-          {
-            condition:
-              document.getElementById("handelClass").value.trim() !== "",
-            message: "Bitte wählen Sie eine Handle-Klasse aus.",
           },
           {
             condition:
@@ -518,6 +708,23 @@
           document.querySelector('input[name="vegan"]:checked').value
         );
 
+        formData.append(
+          "vegetarian",
+          document.querySelector('input[name="vegetarian"]:checked').value
+        );
+        formData.append(
+          "lactose_free",
+          document.querySelector('input[name="lactose_free"]:checked').value
+        );
+        formData.append(
+          "gluten_free",
+          document.querySelector('input[name="gluten_free"]:checked').value
+        );
+        formData.append(
+          "deposit",
+          document.querySelector('input[name="deposit"]:checked').value
+        );
+
         // Collecting dropdown selections
         formData.append("brand", document.getElementById("brand").value);
         formData.append(
@@ -544,7 +751,7 @@
           "weight[unit_vol]",
           document.getElementById("unit_vol").value
         );
-
+        formData.append("origin", document.getElementById("origin").value);
         // Collecting files
         // const files = document.getElementById("images").files;
 
