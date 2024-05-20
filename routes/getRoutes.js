@@ -234,4 +234,73 @@ router.get("/view-product/:id", authenticateToken, async (req, res, next) => {
   }
 });
 
+router.get("/update-product/:id", authenticateToken, async (req, res, next) => {
+  const productId = req.params.id;
+  const loginToken = req.cookies["loginToken"];
+  const API_URL = process.env.API_URL;
+  if (!loginToken) {
+    return res.status(401).send("Authorization token is missing");
+  }
+  try {
+    // Make a GET request to the API to fetch the product by ID
+    const productRequest = axios.get(`${API_URL}/product/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    });
+
+    // Fetch active categories and brands
+    const categoriesRequest = axios.get(`${API_URL}/categories`, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    });
+
+    const brandsRequest = axios.get(`${API_URL}/brands`, {
+      headers: {
+        Authorization: `Bearer ${loginToken}`,
+      },
+    });
+
+    // Use Promise.all to make all requests concurrently
+    const [productResponse, categoriesResponse, brandsResponse] =
+      await Promise.all([productRequest, categoriesRequest, brandsRequest]);
+
+    // Check if the product was found
+    if (!productResponse.data) {
+      return res.status(404).send("Product not found");
+    }
+    console.log(productResponse.data);
+
+    let activeCategories = [];
+    let activeBrands = [];
+
+    // Filter and sort categories
+    if (categoriesResponse.data && categoriesResponse.data.length > 0) {
+      activeCategories = categoriesResponse.data
+        .filter((category) => category.status === "active")
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    // Filter and sort brands
+    if (brandsResponse.data && brandsResponse.data.length > 0) {
+      activeBrands = brandsResponse.data
+        .filter((brand) => brand.status === "active")
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }
+
+    res.render("update-product", {
+      title: "Update product",
+      product: productResponse.data,
+      categories: activeCategories,
+      brands: activeBrands,
+      path: "/view-product",
+      user: req.user,
+    });
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    next(err);
+  }
+});
+
 module.exports = router;

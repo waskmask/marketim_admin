@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/public/images/MFav.png" type="image/png" />
+    <title><%=title%></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/public/style/theme.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <!-- main -->
+    <main>
+      <div class="container-fluid mb-5">
+        <form method="POST" id="updateProductForm" enctype="multipart/form-data">
+          <div class="row my-4" style="gap: 1rem">
+            <div class="col-lg-5 offset-lg-1 p-0">
+              <div class="card border-0 space_object">
+                <div class="card-header bg-white py-3">
+                  <div class="title">Produkt aktualisieren</div>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="title-tr" class="form-label">
+                      Ürün başlığı (tr)
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control title-input"
+                      id="title-tr"
+                      name="title.tr"
+                      value="<%= product.title.tr %>"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="title-de" class="form-label">
+                      Produkt titel (de)
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control title-input"
+                      id="title-de"
+                      name="title.de"
+                      value="<%= product.title.de %>"
+                    />
+                  </div>
+        
+                  <div class="mb-3">
+                    <label for="categories" class="form-label">
+                      Kategorien
+                    </label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <% categories.forEach(function(category) { %>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value="<%= category._id %>"
+                          id="<%= category._id %>"
+                          name="categories"
+                          <%= product.categories.some(cat => cat._id.toString() === category._id.toString()) ? 'checked' : '' %>
+                        />
+                        <label class="form-check-label text-capitalize" for="<%= category._id %>">
+                          <%= category.categoryName %>
+                        </label>
+                      </div>
+                      <% }); %>
+                    </div>
+                  </div>
+        
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label for="bio" class="form-label"> Bio </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="bio-yes"
+                              name="organic"
+                              <%= product.organic ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="bio-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="bio-no"
+                              name="organic"
+                              <%= !product.organic ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="bio-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="vegan" class="form-label text-success">
+                          Vegan
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="vegan-yes"
+                              name="vegan"
+                              <%= product.vegan ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="vegan-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="vegan-no"
+                              name="vegan"
+                              <%= !product.vegan ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="vegan-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="Halal" class="form-label text-success">
+                          Helal
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="halal-yes"
+                              name="isHalal"
+                              <%= product.isHalal ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="halal-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="halal-no"
+                              name="isHalal"
+                              <%= !product.isHalal ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="halal-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label class="form-label text-success">
+                          Vegetarian
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="vegetarian-yes"
+                              name="vegetarian"
+                              <%= product.vegetarian ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="vegetarian-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="vegetarian-no"
+                              name="vegetarian"
+                              <%= !product.vegetarian ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="vegetarian-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="lactose" class="form-label">
+                          Lactose Free
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="lactose_free-yes"
+                              name="lactose_free"
+                              <%= product.lactose_free ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="lactose_free-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="lactose_free-no"
+                              name="lactose_free"
+                              <%= !product.lactose_free ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="lactose_free-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="gluten" class="form-label">
+                          Gluten Free
+                        </label>
+                        <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="true"
+                              id="gluten_free-yes"
+                              name="gluten_free"
+                              <%= product.gluten_free ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="gluten_free-yes">
+                              Ja
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              value="false"
+                              id="gluten_free-no"
+                              name="gluten_free"
+                              <%= !product.gluten_free ? 'checked' : '' %>
+                            />
+                            <label class="form-check-label text-capitalize" for="gluten_free-no">
+                              Nein
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+        
+                  <div class="row">
+                    <div class="mb-3 col-md-6">
+                      <label for="brand" class="form-label">Marke</label>
+                      <select id="brand" name="brand" class="form-select text-capitalize">
+                        <option value="">Wählen</option>
+                        <% brands.forEach(function(brand) { %>
+                        <option
+                          value="<%= brand._id %>"
+                          <%= product.brand.some(b => b._id.toString() === brand._id.toString()) ? 'selected' : '' %>
+                        >
+                          <%= brand.brandName %>
+                        </option>
+                        <% }); %>
+                      </select>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                      <label for="handelClass" class="form-label">
+                        Handel Klass
+                      </label>
+                      <select id="handelClass" name="handelClass" class="form-select">
+                        <option value="">Wählen</option>
+                        <option value="HKL I" <%= product.handelClass === 'HKL I' ? 'selected' : '' %>>HKL I</option>
+                        <option value="HKL II" <%= product.handelClass === 'HKL II' ? 'selected' : '' %>>HKL II</option>
+                        <option value="HKL III" <%= product.handelClass === 'HKL III' ? 'selected' : '' %>>HKL III</option>
+                      </select>
+                    </div>
+                  </div>
+        
+                  <div class="row">
+                    <div class="mb-3 col-md-6">
+                      <label for="unit_price" class="form-label">Einheitspreis</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="unit_price"
+                        name="unit_price"
+                        value="<%= product.unit_price %>"
+                      />
+                    </div>
+                    <div class="mb-3 col-md-6">
+                      <label for="base_price" class="form-label">Preis</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="base_price"
+                        name="base_price"
+                        value="<%= product.base_price %>"
+                        required
+                      />
+                    </div>
+                  </div>
+        
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="unit_type" class="form-label">Gewicht typ (unit type)</label>
+                      <select name="unit_type" id="unit_type" class="form-select">
+                        <option value="">Wählen</option>
+                        <option value="g" <%= product.weight.unit_type === 'g' ? 'selected' : '' %>>g</option>
+                        <option value="kg" <%= product.weight.unit_type === 'kg' ? 'selected' : '' %>>kg</option>
+                        <option value="liter" <%= product.weight.unit_type === 'liter' ? 'selected' : '' %>>Liter</option>
+                        <option value="ml" <%= product.weight.unit_type === 'ml' ? 'selected' : '' %>>ml</option>
+                        <option value="unit" <%= product.weight.unit_type === 'unit' ? 'selected' : '' %>>Einheit</option>
+                        <option value="ounce" <%= product.weight.unit_type === 'ounce' ? 'selected' : '' %>>Unze</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="unit_vol" class="form-label">Gewicht (unit vol)</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="unit_vol"
+                        name="unit_vol"
+                        value="<%= product.weight.unit_vol %>"
+                        placeholder="z.B. 2kg"
+                      />
+                    </div>
+                  </div>
+        
+                  <div class="col-md-6 mb-3">
+                    <label for="package_type" class="form-label">Pakettyp (package type)</label>
+                    <select name="package_type" id="package_type" class="form-select">
+                      <option value="">Wählen</option>
+                      <option value="canned" <%= product.package_type === 'canned' ? 'selected' : '' %>>Dosen</option>
+                      <option value="bucket" <%= product.package_type === 'bucket' ? 'selected' : '' %>>Eimer</option>
+                      <option value="bottle" <%= product.package_type === 'bottle' ? 'selected' : '' %>>Flasche</option>
+                      <option value="glass" <%= product.package_type === 'glass' ? 'selected' : '' %>>Glas</option>
+                      <option value="jar" <%= product.package_type === 'jar' ? 'selected' : '' %>>Krug</option>
+                      <option value="carton" <%= product.package_type === 'carton' ? 'selected' : '' %>>Karton</option>
+                      <option value="basket" <%= product.package_type === 'basket' ? 'selected' : '' %>>Korb</option>
+                      <option value="box" <%= product.package_type === 'box' ? 'selected' : '' %>>Kiste</option>
+                      <option value="pack" <%= product.package_type === 'pack' ? 'selected' : '' %>>Packung</option>
+                      <option value="packet" <%= product.package_type === 'packet' ? 'selected' : '' %>>Packet</option>
+                      <option value="pet" <%= product.package_type === 'pet' ? 'selected' : '' %>>PET</option>
+                      <option value="pet_bottle" <%= product.package_type === 'pet_bottle' ? 'selected' : '' %>>PET-Flasche</option>
+                      <option value="dispenser_bottle" <%= product.package_type === 'dispenser_bottle' ? 'selected' : '' %>>Spenderflasche</option>
+                      <option value="bag" <%= product.package_type === 'bag' ? 'selected' : '' %>>Sack</option>
+                      <option value="piece" <%= product.package_type === 'piece' ? 'selected' : '' %>>Stück</option>
+                      <option value="tube" <%= product.package_type === 'tube' ? 'selected' : '' %>>Tube</option>
+                      <option value="pot" <%= product.package_type === 'pot' ? 'selected' : '' %>>Topf</option>
+                      <option value="blackboard" <%= product.package_type === 'blackboard' ? 'selected' : '' %>>Tafel</option>
+                      <option value="wash_loads" <%= product.package_type === 'wash_loads' ? 'selected' : '' %>>Waschladungen</option>
+                      <option value="2 pack" <%= product.package_type === '2 pack' ? 'selected' : '' %>>2er Pack</option>
+                      <option value="4 pack" <%= product.package_type === '4 pack' ? 'selected' : '' %>>4er Pack</option>
+                      <option value="6 pack" <%= product.package_type === '6 pack' ? 'selected' : '' %>>6er Pack</option>
+                      <option value="8 pack" <%= product.package_type === '8 pack' ? 'selected' : '' %>>8er Pack</option>
+                      <option value="10 pack" <%= product.package_type === '10 pack' ? 'selected' : '' %>>10er Pack</option>
+                      <option value="12 pack" <%= product.package_type === '12 pack' ? 'selected' : '' %>>12er Pack</option>
+                      <option value="14 pack" <%= product.package_type === '14 pack' ? 'selected' : '' %>>14er Pack</option>
+                      <option value="16 pack" <%= product.package_type === '16 pack' ? 'selected' : '' %>>16er Pack</option>
+                      <option value="18 pack" <%= product.package_type === '18 pack' ? 'selected' : '' %>>18er Pack</option>
+                      <option value="20 pack" <%= product.package_type === '20 pack' ? 'selected' : '' %>>20er Pack</option>
+                      <option value="22 pack" <%= product.package_type === '22 pack' ? 'selected' : '' %>>22er Pack</option>
+                      <option value="24 pack" <%= product.package_type === '24 pack' ? 'selected' : '' %>>24er Pack</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 p-0">
+              <div class="card border-0 space_object">
+                <div class="card-header bg-white py-3">
+                  <div class="title">
+                    <i class="fa-regular fa-image"></i> Produktmedien hinzufügen
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="images" class="form-label file-label" id="toggleFileInput">
+                      <i class="fa-solid fa-plus"></i> Füge Bilder hinzu
+                    </label>
+                    <input
+                      type="file"
+                      class="d-none"
+                      name="images"
+                      id="images"
+                      multiple
+                      accept="image/*"
+                    />
+                    <div class="img-preview mt-3" id="preview">
+                      <% product.images.forEach(function(image, index) { %>
+                      <div class="preview-item" data-existing="true" data-index="<%= index %>" data-image="<%= image %>">
+                        <img src="https://hl-fc.de/uploads/<%= image %>" alt="preview">
+                        <div class="remove-img" data-index="<%= index %>" data-existing="true">
+                          <i class="fa-solid fa-trash"></i>
+                        </div>
+                      </div>
+                      <% }); %>
+                    </div>
+                  </div>
+                  <div class="my-3">
+                    <label for="origin" class="form-label">Ursprungsland</label>
+                    <select name="origin" id="origin" class="form-select">
+                      <option value="">Wählen</option>
+                      <option value="balkan products" <%= product.origin === 'balkan products' ? 'selected' : '' %>>Balkan products</option>
+                      <option value="arabic products" <%= product.origin === 'arabic products' ? 'selected' : '' %>>Arabic products</option>
+                      <option value="Turkish products" <%= product.origin === 'Turkish products' ? 'selected' : '' %>>Turkish products</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="deposit" class="form-label">Pfand</label>
+                    <div class="d-flex flex-wrap mt-2" style="gap: 1rem">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="true"
+                          id="deposit-yes"
+                          name="deposit"
+                          <%= product.deposit ? 'checked' : '' %>
+                        />
+                        <label class="form-check-label text-capitalize" for="deposit-yes">
+                          Ja
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="false"
+                          id="deposit-no"
+                          name="deposit"
+                          <%= !product.deposit ? 'checked' : '' %>
+                        />
+                        <label class="form-check-label text-capitalize" for="deposit-no">
+                          Nein
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-alert success d-none" id="successAlert">
+                    Produkt erfolgreich aktualisiert!
+                  </div>
+                  <div class="form-alert d-none error" id="errorAlert">
+                    Fehler beim Aktualisieren des Produkts
+                  </div>
+                  <button type="submit" class="btn btn-primary mt-2 mb-2">Produkt aktualisieren</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+      </div>
+    </main>
+    <!-- main end -->
+    <div class="custom-toast d-none"></div>
+    <!-- js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/public/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/public/js/sweetalert.min.js"></script>
+    <script src="/public/js/theme.js"></script>
+
+    <script>
+      let accumulatedFiles = [];
+      let removedExistingImages = [];
+    
+      document.getElementById("images").addEventListener("change", function (e) {
+        setLoading(true);
+    
+        let newFiles = Array.from(e.target.files).filter(
+          (file) => !accumulatedFiles.find((f) => f.name === file.name)
+        );
+    
+        let filesLoaded = 0;
+        newFiles.forEach((file) => {
+          accumulatedFiles.push(file);
+          const reader = new FileReader();
+          reader.onloadend = function () {
+            if (++filesLoaded === newFiles.length) {
+              setLoading(false);
+              updatePreviews();
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+    
+        if (newFiles.length === 0) {
+          setLoading(false);
+        }
+      });
+    
+      function updatePreviews() {
+        const previewContainer = document.getElementById("preview");
+        previewContainer.innerHTML = "";
+    
+        // Display existing images
+        document.querySelectorAll('.preview-item[data-existing="true"]').forEach(item => {
+          if (!removedExistingImages.includes(item.dataset.image)) {
+            previewContainer.appendChild(item);
+          }
+        });
+    
+        // Display new images
+        accumulatedFiles.forEach((file, index) => {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const previewItem = document.createElement("div");
+            previewItem.classList.add("preview-item");
+    
+            previewItem.innerHTML = `
+              <img src="${e.target.result}" alt="preview"/>
+              <div class="remove-img" data-index="${index}"><i class="fa-solid fa-trash"></i></div>
+            `;
+    
+            previewContainer.appendChild(previewItem);
+    
+            previewItem.querySelector(".remove-img").addEventListener("click", function () {
+              setLoading(true);
+              const removeIndex = parseInt(this.getAttribute("data-index"), 10);
+              accumulatedFiles.splice(removeIndex, 1);
+              updatePreviews();
+              setLoading(false);
+            });
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    
+      function setLoading(loading) {
+        const label = document.getElementById("toggleFileInput");
+        if (loading) {
+          label.textContent = "Wird geladen...";
+        } else {
+          label.innerHTML = '<i class="fa-solid fa-plus"></i> Füge Bilder hinzu';
+        }
+      }
+    
+      document.getElementById('updateProductForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+    
+        document.querySelectorAll('input[type="text"]').forEach((input) => {
+          input.value = input.value.trim();
+        });
+    
+        let oneTitleFilled = false;
+        document.querySelectorAll(".title-input").forEach((input) => {
+          if (input.value) oneTitleFilled = true;
+        });
+    
+        if (!oneTitleFilled) {
+          swal("Error", "Bitte füllen Sie mindestens einen Titel aus.", "error");
+          return;
+        }
+    
+        const formData = new FormData();
+    
+        // Collecting text inputs
+        formData.append("title[tr]", document.getElementById("title-tr").value);
+        formData.append("title[de]", document.getElementById("title-de").value);
+    
+        // Collecting categories
+        document.querySelectorAll('input[name="categories"]:checked').forEach((checkbox) => {
+          formData.append("categories", checkbox.value);
+        });
+    
+        // Collecting single choice inputs (e.g., radio buttons for 'bio' and 'halal')
+        formData.append("organic", document.querySelector('input[name="organic"]:checked').value);
+        formData.append("isHalal", document.querySelector('input[name="isHalal"]:checked').value);
+        formData.append("vegan", document.querySelector('input[name="vegan"]:checked').value);
+        formData.append("vegetarian", document.querySelector('input[name="vegetarian"]:checked').value);
+        formData.append("lactose_free", document.querySelector('input[name="lactose_free"]:checked').value);
+        formData.append("gluten_free", document.querySelector('input[name="gluten_free"]:checked').value);
+        formData.append("deposit", document.querySelector('input[name="deposit"]:checked').value);
+    
+        // Collecting dropdown selections
+        formData.append("brand", document.getElementById("brand").value);
+        formData.append("handelClass", document.getElementById("handelClass").value);
+        formData.append("unit_price", document.getElementById("unit_price").value);
+        formData.append("base_price", document.getElementById("base_price").value);
+        formData.append("package_type", document.getElementById("package_type").value);
+        formData.append("weight[unit_type]", document.getElementById("unit_type").value);
+        formData.append("weight[unit_vol]", document.getElementById("unit_vol").value);
+        formData.append("origin", document.getElementById("origin").value);
+    
+        // Collecting removed images
+        removedExistingImages.forEach(image => {
+          formData.append('removedImages', image);
+        });
+    
+        // Collecting new images
+        accumulatedFiles.forEach(file => {
+          formData.append('images', file);
+        });
+    
+        axios.patch(`${API_URL}/product/<%= product._id %>`, formData, {
+          headers: {
+            'Authorization': `Bearer ${getCookie('loginToken')}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          if (response.data.message) {
+            swal("Error", response.data.message, "error");
+          } else {
+            swal("Success", "Produkt erfolgreich aktualisiert!", "success");
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          swal("Error", "Beim Aktualisieren des Produkts ist ein Problem aufgetreten.", "error");
+        });
+      });
+    
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    
+      // Initialize existing images handling
+      document.querySelectorAll('.remove-img[data-existing="true"]').forEach(button => {
+        button.addEventListener("click", function () {
+          setLoading(true);
+          const image = this.closest('.preview-item').dataset.image;
+          removedExistingImages.push(image);
+          updatePreviews();
+          setLoading(false);
+        });
+      });
+    </script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutButton = document.querySelector("#logoutButton");
+
+        if (logoutButton) {
+          logoutButton.addEventListener("click", () => {
+            document.cookie =
+              "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location.href = "/";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
