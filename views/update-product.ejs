@@ -290,14 +290,14 @@
                       <select id="brand" name="brand" class="form-select text-capitalize">
                         <option value="">Wählen</option>
                         <% brands.forEach(function(brand) { %>
-                        <option
-                          value="<%= brand._id %>"
-                          <%= product.brand.some(b => b._id.toString() === brand._id.toString()) ? 'selected' : '' %>
-                        >
-                          <%= brand.brandName %>
-                        </option>
+                          <option
+                            value="<%= brand._id %>"
+                            <%= product.brand.some(b => b._id.toString() === brand._id.toString()) ? 'selected' : '' %>>
+                            <%= brand.brandName %>
+                          </option>
                         <% }); %>
                       </select>
+                      
                     </div>
                     <div class="mb-3 col-md-6">
                       <label for="handelClass" class="form-label">
@@ -425,7 +425,7 @@
                     <div class="img-preview mt-3" id="preview">
                       <% product.images.forEach(function(image, index) { %>
                       <div class="preview-item" data-existing="true" data-index="<%= index %>" data-image="<%= image %>">
-                        <img src="https://hl-fc.de/uploads/<%= image %>" alt="preview">
+                        <img src="http://localhost:3000/uploads/<%= image %>" alt="preview">
                         <div class="remove-img" data-index="<%= index %>" data-existing="true">
                           <i class="fa-solid fa-trash"></i>
                         </div>
@@ -503,6 +503,7 @@
 
     <script>
       let accumulatedFiles = [];
+      let ExistingImages = '<%- product.images %>'.split(",");
       let removedExistingImages = [];
     
       document.getElementById("images").addEventListener("change", function (e) {
@@ -535,11 +536,60 @@
         previewContainer.innerHTML = "";
     
         // Display existing images
-        document.querySelectorAll('.preview-item[data-existing="true"]').forEach(item => {
-          if (!removedExistingImages.includes(item.dataset.image)) {
-            previewContainer.appendChild(item);
-          }
+        // document.querySelectorAll('.preview-item[data-existing="true"]').forEach(item => {
+        //   if (!removedExistingImages.includes(item.dataset.image)) {
+        //     previewContainer.appendChild(item);
+        //   }
+        // });
+
+        ExistingImages.forEach((item, index) => {
+          const previewItem = document.createElement('div');
+    previewItem.className = 'preview-item';
+    previewItem.setAttribute('data-existing', 'true');
+    previewItem.setAttribute('data-index', index);
+    previewItem.setAttribute('data-image', item);
+
+    // Create the image element
+    const img = document.createElement('img');
+    img.src = `http://localhost:3000/uploads/${item}`;
+    img.alt = 'preview';
+
+    // Create the remove button container
+    const removeDiv = document.createElement('div');
+    removeDiv.className = 'remove-img';
+    removeDiv.setAttribute('data-index', index);
+    removeDiv.setAttribute('data-existing', 'true');
+
+    // Create the icon element
+    const icon = document.createElement('i');
+    icon.className = 'fa-solid fa-trash';
+
+    // Append the icon to the remove button container
+    removeDiv.appendChild(icon);
+
+    // Append the image and remove button container to the main container div
+    previewItem.appendChild(img);
+    previewItem.appendChild(removeDiv);
+
+    // Append the main container div to the preview container
+    previewContainer.appendChild(previewItem);
+          
         });
+
+        document.querySelectorAll('.remove-img[data-existing="true"]').forEach(button => {
+        button.addEventListener("click", function () {
+          setLoading(true);
+          const image = this.closest('.preview-item').dataset.image;
+          removedExistingImages.push(image);
+          const index = ExistingImages.indexOf(image);
+        if (index > -1) {
+            ExistingImages.splice(index, 1);
+        }
+        
+          updatePreviews();
+          setLoading(false);
+        });
+      });
     
         // Display new images
         accumulatedFiles.forEach((file, index) => {
@@ -622,10 +672,15 @@
         formData.append("weight[unit_type]", document.getElementById("unit_type").value);
         formData.append("weight[unit_vol]", document.getElementById("unit_vol").value);
         formData.append("origin", document.getElementById("origin").value);
+
     
         // Collecting removed images
         removedExistingImages.forEach(image => {
           formData.append('removedImages', image);
+        });
+
+        ExistingImages.forEach(img => {
+          formData.append('existingImages', img);
         });
     
         // Collecting new images
@@ -673,6 +728,11 @@
           setLoading(true);
           const image = this.closest('.preview-item').dataset.image;
           removedExistingImages.push(image);
+          const index = ExistingImages.indexOf(image);
+        if (index > -1) {
+            ExistingImages.splice(index, 1);
+        }
+        
           updatePreviews();
           setLoading(false);
         });
