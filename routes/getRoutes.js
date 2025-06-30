@@ -70,6 +70,7 @@ router.get("/product-categories", authenticateToken, async (req, res, next) => {
 router.get("/brands", authenticateToken, async (req, res, next) => {
   const loginToken = req.cookies["loginToken"];
   const API_URL = process.env.API_URL;
+  const BASE_URL = process.env.BASE_URL;
   if (!loginToken) {
     return res.status(401).send("Authorization token is missing");
   }
@@ -91,6 +92,7 @@ router.get("/brands", authenticateToken, async (req, res, next) => {
         path: "/master",
         user: req.user,
         brands: brands,
+        BASE_URL: BASE_URL,
       });
     } else {
       res.render("brands", {
@@ -109,6 +111,7 @@ router.get("/brands", authenticateToken, async (req, res, next) => {
 router.get("/products", authenticateToken, async (req, res, next) => {
   const loginToken = req.cookies["loginToken"];
   const API_URL = process.env.API_URL;
+  const BASE_URL = process.env.BASE_URL;
   if (!loginToken) {
     return res.status(401).send("Authorization token is missing");
   }
@@ -131,6 +134,7 @@ router.get("/products", authenticateToken, async (req, res, next) => {
       path: "/products",
       user: req.user,
       products: products,
+      BASE_URL: BASE_URL,
     });
   } catch (err) {
     console.error("Error fetching data:", error);
@@ -199,6 +203,7 @@ router.get("/view-product/:id", authenticateToken, async (req, res, next) => {
   const loginToken = req.cookies["loginToken"];
   const API_URL = process.env.API_URL;
   const productId = req.params.id;
+  const BASE_URL = process.env.BASE_URL;
   if (!loginToken) {
     return res.status(401).send("Authorization token is missing");
   }
@@ -220,6 +225,7 @@ router.get("/view-product/:id", authenticateToken, async (req, res, next) => {
       product: productResponse.data,
       path: "/view-product",
       user: req.user,
+      BASE_URL: BASE_URL,
     });
   } catch (err) {
     if (err.response && err.response.status === 404) {
@@ -238,6 +244,7 @@ router.get("/update-product/:id", authenticateToken, async (req, res, next) => {
   const productId = req.params.id;
   const loginToken = req.cookies["loginToken"];
   const API_URL = process.env.API_URL;
+  const BASE_URL = process.env.BASE_URL;
   if (!loginToken) {
     return res.status(401).send("Authorization token is missing");
   }
@@ -296,6 +303,7 @@ router.get("/update-product/:id", authenticateToken, async (req, res, next) => {
       brands: activeBrands,
       path: "/view-product",
       user: req.user,
+      BASE_URL: BASE_URL,
     });
   } catch (err) {
     console.error("Error fetching data:", err);

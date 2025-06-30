@@ -115,7 +115,7 @@
                           <% if(brand.brandLogo || !brand.brandLogo == "") {%>
                           <img
                             class="pro-avatar"
-                            src="https://hl-fc.de/uploads/<%- brand.brandLogo %>"
+                            src="<%- BASE_URL %>/uploads/<%- brand.brandLogo %>"
                             alt=""
                           />
                           <% } else {%>
@@ -285,7 +285,7 @@
 
               // Assuming the logo needs to be accessed via a full URL path
               // Adjust `baseUrl` to the directory where images are served from
-              const baseUrl = "https://hl-fc.de/uploads/";
+              const baseUrl = "<%- BASE_URL %>/uploads/";
               const fullLogoUrl = baseUrl + brandLogoUrl;
 
               const brandTable = document.getElementById("brandTable");

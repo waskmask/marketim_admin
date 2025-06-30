@@ -64,7 +64,7 @@
                       <tr>
                         <td>
                           <img
-                            src="https://hl-fc.de/uploads/<%-product.thumbnail%>"
+                            src="<%- BASE_URL %>/uploads/<%-product.thumbnail%>"
                             alt=""
                             style="
                               width: 60px;
@@ -96,6 +96,10 @@
                         <td class="mx150">
                           <a href="view-product/<%- product._id %>">
                             <i class="fa-regular fa-eye"></i>
+                          </a>
+                          |
+                          <a href="update-product/<%- product._id %>">
+                            <i class="fa-regular fa-edit"></i>
                           </a>
                         </td>
                       </tr>

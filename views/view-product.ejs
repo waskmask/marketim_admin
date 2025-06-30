@@ -67,12 +67,12 @@
                 <div class="view-product-images">
                   <% product.images.forEach(function(imageUrl, index) { %>
                   <a
-                    href="https://hl-fc.de/uploads/<%- imageUrl %>"
+                    href="http://localhost:3000/uploads/<%- imageUrl %>"
                     data-lightbox="product-image-set"
                     data-title="Product Image <%= index + 1 %>"
                   >
                     <img
-                      src="https://hl-fc.de/uploads/<%- imageUrl %>"
+                      src="http://localhost:3000/uploads/<%- imageUrl %>"
                       alt="Product Image <%= index + 1 %>"
                     />
                   </a>
@@ -102,7 +102,7 @@
                   product.brand.forEach(function(brand) { %>
                   <img
                     class="item-logo"
-                    src="https://hl-fc.de/uploads/<%= brand.brandLogo %>"
+                    src="<%= BASE_URL %>/uploads/<%= brand.brandLogo %>"
                     alt=""
                   />
                   <span class="text-capitalize"><%= brand.brandName %></span>
