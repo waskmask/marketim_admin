@@ -67,12 +67,12 @@
                 <div class="view-product-images">
                   <% product.images.forEach(function(imageUrl, index) { %>
                   <a
-                    href="http://localhost:3000/uploads/<%- imageUrl %>"
+                    href="https://api.marketim.app/uploads/<%- imageUrl %>"
                     data-lightbox="product-image-set"
                     data-title="Product Image <%= index + 1 %>"
                   >
                     <img
-                      src="http://localhost:3000/uploads/<%- imageUrl %>"
+                      src="https://api.marketim.app/uploads/<%- imageUrl %>"
                       alt="Product Image <%= index + 1 %>"
                     />
                   </a>

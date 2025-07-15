@@ -425,7 +425,7 @@
                     <div class="img-preview mt-3" id="preview">
                       <% product.images.forEach(function(image, index) { %>
                       <div class="preview-item" data-existing="true" data-index="<%= index %>" data-image="<%= image %>">
-                        <img src="http://localhost:3000/uploads/<%= image %>" alt="preview">
+                        <img src="https://api.marketim.app/uploads/<%= image %>" alt="preview">
                         <div class="remove-img" data-index="<%= index %>" data-existing="true">
                           <i class="fa-solid fa-trash"></i>
                         </div>
@@ -551,7 +551,7 @@
 
     // Create the image element
     const img = document.createElement('img');
-    img.src = `http://localhost:3000/uploads/${item}`;
+    img.src = `https://api.marketim.app/uploads/${item}`;
     img.alt = 'preview';
 
     // Create the remove button container
